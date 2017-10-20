@@ -45,7 +45,19 @@ $(window).keypress(function(e){
     }
   }
   if(e.key === '+' || e.key === '-' || e.key === '/' || e.key === 'x'){
-    operator = e.key;
+
+//
+
+    if(firstNum !== 0 && secondNum !== 0){
+      var result = calculate(firstNum, secondNum);
+      console.log("result " + result);
+      $("#display").text(result);
+      operator = e.key;
+    }
+    //if not, then the operator is whatever text is in the invoking object
+    else{
+      operator = e.key;
+    }
     console.log(operator)
   }
 
@@ -65,10 +77,20 @@ $(window).keypress(function(e){
   }
 
   if(e.key === "%"){
-    var$("display").text()
+    var percentageVal = parseFloat( $("#display").text() )/100;
+    $("#display").text(percentageVal);
+    firstNum = percentageVal;
+            //sets the firstNum again so we don't just have a changed display
+            //that doesn't get stored anyways
   }
+  if(e.key === "p"){
+    var plusMinusVal = parseFloat( $("#display").text() ); //gets us display text
 
-
+      plusMinusVal = 0 - plusMinusVal;
+      $("#display").text(plusMinusVal);
+      firstNum = plusMinusVal; //sets the firstNum again so we don't just have a changed display
+                              //that doesn't get stored anyways
+  }
 });
 //*******************************************************
 
@@ -142,7 +164,7 @@ console.log('fn ' + fn)
     //if its not loaded, then don't enter.
     //Important because using this selector doesn't work, if the thing is never built in the first place for it to select
 
-  $("#display").text(" ");
+  $("#display").text("0");
 
 
   $(".number").click(function(ev){
